@@ -1,0 +1,18 @@
+clusterName: YOURCLUSTERHERE
+splunkObservability:
+  realm: YOURREALMHERE
+  accessToken: YOURTOKENHERE
+
+agent:
+  config:
+    exporters:
+      logging:
+        loglevel: debug
+        sampling_initial: 5
+        sampling_thereafter: 200
+    service:
+      pipelines:
+        metrics:
+          exporters:
+            - signalfx
+            - logging
