@@ -1,1 +1,1 @@
-sudo kubectl apply -f java-deployment.yaml
+sudo kubectl -n otel apply -f java-deployment.yaml

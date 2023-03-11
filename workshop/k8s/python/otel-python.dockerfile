@@ -7,7 +7,6 @@ RUN apt-get update && \
     apt install -y python3-pip && \
     apt install -y curl && \    
     python3 -m pip install -r requirements.txt && \
-    splk-py-trace-bootstrap && \
     apt -y autoremove && apt-get -y autoclean
 EXPOSE 5000 9090
 

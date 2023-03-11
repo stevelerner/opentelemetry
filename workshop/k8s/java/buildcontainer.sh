@@ -1,6 +1,6 @@
 # requires dockerhub login
-curl -L https://github.com/signalfx/splunk-otel-java/releases/latest/download/splunk-otel-javaagent-all.jar -o ./splunk-otel-javaagent.jar
-sudo docker build . -f dockerfile-java -t splk-java
-sudo docker tag splk-java stevelsplunk/splk-java
-sudo docker push stevelsplunk/splk-java
-rm ./splunk-otel-javaagent.jar
+curl -L https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar -o ./opentelemetry-javaagent.jar
+sudo docker build . -f dockerfile-java -t otel-java
+sudo docker tag otel-java stevelerner/otel-java
+sudo docker push stevelerner/otel-java
+rm ./opentelemetry-javaagent.jar

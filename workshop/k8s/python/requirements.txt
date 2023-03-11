@@ -1,4 +1,4 @@
-splunk-opentelemetry[all]
+opentelemetry-api
 flask
 requests
 prometheus_client

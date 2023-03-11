@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: server-flask-otel-k8s
+  namespace: otel
 spec:
   selector:
     matchLabels:
@@ -15,19 +16,19 @@ spec:
     spec:
       containers:
       - name: server-flask-otel-k8s
-        image: docker.io/stevelsplunk/splk-python
+        image: docker.io/stevelerner/otel-python
         ports:
           - name: http
             containerPort: 5000
         env:
         - name: OTEL_SERVICE_NAME
           value: server-flask-otel-k8s
-        - name: SPLUNK_OTEL_AGENT
+        - name: OTEL_IP
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
         - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: http://$(SPLUNK_OTEL_AGENT):4317
+          value: http://$(OTEL_IP):4317
         command: ["/bin/sh"]
         args: ["run-server.sh"]
 ---
@@ -36,6 +37,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: server-flask-otel-k8s
+  namespace: otel
 spec:
   selector:
     name: server-flask-otel-k8s
@@ -52,21 +54,15 @@ metadata:
 spec:
   containers:
   - name: client-py-otel-k8s
-    image: docker.io/stevelsplunk/splk-python
+    image: docker.io/stevelerner/otel-python
     env:
     - name: OTEL_SERVICE_NAME
       value: client-py-otel-k8s
-    - name: SPLUNK_OTEL_AGENT
+    - name: OTEL_IP
       valueFrom:
         fieldRef:
           fieldPath: status.hostIP
- #  - name: OTEL_EXPORTER_JAEGER_ENDPOINT
- #    value: http://$(SPLUNK_OTEL_AGENT):9080/v1/trace
- #  - name: OTEL_TRACES_EXPORTER
- #    value: jaeger-thrift-splunk
- #  - name: OTEL_PROPAGATORS
- #    value: b3multi
     - name: OTEL_EXPORTER_OTLP_ENDPOINT
-      value: http://$(SPLUNK_OTEL_AGENT):4317
+      value: http://$(OTEL_IP):4317
     command: ["/bin/sh"]
     args: ["run-client.sh"]
