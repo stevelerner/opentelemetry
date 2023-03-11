@@ -1,4 +1,3 @@
-opentelemetry-instrumentation-redis
 redis
 flask
 requests
