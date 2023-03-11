@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt install -y python3-pip && \
     apt install -y curl && \    
     python3 -m pip install -r requirements.txt && \
-    python3 -m pip install opentelemetry-distro opentelemetry-exporter-otlp && \
+    python3 -m pip install opentelemetry-distro opentelemetry-instrumentation opentelemetry-exporter-otlp && \
     opentelemetry-bootstrap -a install && \
     apt -y autoremove && apt-get -y autoclean
 EXPOSE 5000 9090
