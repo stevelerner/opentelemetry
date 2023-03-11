@@ -1,1 +1,0 @@
-kubectl apply -f py-deployment.yaml && kubectl apply -f java-deployment.yaml
