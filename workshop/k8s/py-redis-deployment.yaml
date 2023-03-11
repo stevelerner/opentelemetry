@@ -1,0 +1,110 @@
+---
+# Flask Server Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-flask-otel-k8s
+  namespace: otel
+spec:
+  selector:
+    matchLabels:
+      name: server-flask-otel-k8s
+  template:
+    metadata:
+      labels:
+        name: server-flask-otel-k8s
+    spec:
+      containers:
+      - name: server-flask-otel-k8s
+        image: docker.io/stevelerner/otel-python
+        ports:
+          - name: http
+            containerPort: 5000
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: server-flask-otel-k8s
+        - name: OTEL_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://$(OTEL_IP):4317
+        command: ["/bin/sh"]
+        args: ["run-flask-redis-server.sh"]
+---
+# Flask Server Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-flask-otel-k8s
+  namespace: otel
+spec:
+  selector:
+    name: server-flask-otel-k8s
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+---
+# Python Requests Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-py-otel-k8s
+  namespace: otel
+spec:
+  containers:
+  - name: client-py-otel-k8s
+    image: docker.io/stevelerner/otel-python
+    env:
+    - name: OTEL_SERVICE_NAME
+      value: client-py-otel-k8s
+    - name: OTEL_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    - name: OTEL_TRACES_EXPORTER
+      value: otlp
+    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      value: http://$(OTEL_IP):4317
+    command: ["/bin/sh"]
+    args: ["run-client.sh"]
+---
+# Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: otel
+spec:
+  selector:
+    name: redis
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+---
+# Redis Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: otel
+spec:
+  selector:
+    matchLabels:
+      name: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: redis
+    spec:
+      containers:
+      - name: redis
+        image: docker.io/stevelerner/redis
+        ports:
+        - containerPort: 6379
+        command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
