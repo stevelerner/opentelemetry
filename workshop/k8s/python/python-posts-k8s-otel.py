@@ -18,4 +18,4 @@ while x:
     pythonrequests()
     y = random()
     print('Sleeping: ', round(y,2))
-    sleep(round(y,1))
+    sleep(round(y,2))

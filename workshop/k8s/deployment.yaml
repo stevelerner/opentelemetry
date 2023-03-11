@@ -48,53 +48,69 @@ spec:
     port: 5000
     targetPort: 5000
 ---
-# Python Posts Pod
-apiVersion: v1
-kind: Pod
+# Python Posts
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: client-py-posts
   namespace: otel
 spec:
-  containers:
-  - name: client-py-posts
-    image: docker.io/stevelerner/otel-python
-    env:
-    - name: OTEL_SERVICE_NAME
-      value: client-py-posts
-    - name: OTEL_IP
-      valueFrom:
-        fieldRef:
-          fieldPath: status.hostIP
-    - name: OTEL_TRACES_EXPORTER
-      value: otlp
-    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-      value: http://$(OTEL_IP):4317
-    command: ["/bin/sh"]
-    args: ["run-posts.sh"]
+  selector:
+    matchLabels:
+      name: client-py-posts
+  template:
+    metadata:
+      labels:
+        name: client-py-posts
+    spec:
+      containers:
+      - name: client-py-posts
+        image: docker.io/stevelerner/otel-python
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: client-py-posts
+        - name: OTEL_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://$(OTEL_IP):4317
+        command: ["/bin/sh"]
+        args: ["run-posts.sh"]
 ---
-# Python Gets Pod
-apiVersion: v1
-kind: Pod
+# Python Gets
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: client-py-gets
   namespace: otel
 spec:
-  containers:
-  - name: client-py-gets
-    image: docker.io/stevelerner/otel-python
-    env:
-    - name: OTEL_SERVICE_NAME
-      value: client-py-gets
-    - name: OTEL_IP
-      valueFrom:
-        fieldRef:
-          fieldPath: status.hostIP
-    - name: OTEL_TRACES_EXPORTER
-      value: otlp
-    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-      value: http://$(OTEL_IP):4317
-    command: ["/bin/sh"]
-    args: ["run-gets.sh"]
+  selector:
+    matchLabels:
+      name: client-py-gets
+  template:
+    metadata:
+      labels:
+        name: client-py-gets
+    spec:
+      containers:
+      - name: client-py-gets
+        image: docker.io/stevelerner/otel-python
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: client-py-gets
+        - name: OTEL_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://$(OTEL_IP):4317
+        command: ["/bin/sh"]
+        args: ["run-gets.sh"]
 ---
 # Redis Service
 apiVersion: v1
@@ -134,23 +150,31 @@ spec:
         command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
 ---
 # Java Client
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: client-java-gets
   namespace: otel
 spec:
-  containers:
-  - name: client-java-gets
-    image: docker.io/stevelerneclient-java-gets
-    env:
-    - name: OTEL_IP
-      valueFrom:
-        fieldRef:
-          fieldPath: status.hostIP
-    - name: OTEL_SERVICE_NAME
-      value: client-java-gets
-    - name: OTEL_EXPORTER_OTLP_ENDPOINT
-      value: http://$(OTEL_IP):4317
-    command: ["/bin/sh"]
-    args: ["run-client.sh"]
+  selector:
+    matchLabels:
+      name: client-java-gets
+  template:
+    metadata:
+      labels:
+        name: client-java-gets
+    spec:
+      containers:
+      - name: client-java-gets
+        image: docker.io/stevelerner/otel-java
+        env:
+        - name: OTEL_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_SERVICE_NAME
+          value: client-java-gets
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://$(OTEL_IP):4317
+        command: ["/bin/sh"]
+        args: ["run-client.sh"]
