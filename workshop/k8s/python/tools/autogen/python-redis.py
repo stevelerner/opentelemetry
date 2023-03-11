@@ -7,7 +7,7 @@ import os
 from time import sleep
 from random import random, seed, randint
 
-redis_host = os.getenv('REDISHOST')
+redis_host = os.getenv('REDIS_SERVICE_HOST')
 redis_port = 6379
 redis_password = ""
 
