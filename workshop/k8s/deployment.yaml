@@ -137,19 +137,19 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: java-client
+  name: client-java-gets
   namespace: otel
 spec:
   containers:
-  - name: java-client
-    image: docker.io/stevelerner/otel-java
+  - name: client-java-gets
+    image: docker.io/stevelerneclient-java-gets
     env:
     - name: OTEL_IP
       valueFrom:
         fieldRef:
           fieldPath: status.hostIP
     - name: OTEL_SERVICE_NAME
-      value: java-client
+      value: client-java-gets
     - name: OTEL_EXPORTER_OTLP_ENDPOINT
       value: http://$(OTEL_IP):4317
     command: ["/bin/sh"]
