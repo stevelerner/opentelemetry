@@ -1,1 +1,1 @@
-splunk-py-trace python3 ./python-redis.py
+opentelemetry-instrument python3 ./python-redis.py

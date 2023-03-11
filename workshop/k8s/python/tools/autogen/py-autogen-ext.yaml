@@ -2,10 +2,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: py-autogen
+  namespace: otel
 spec:
   containers:
   - name: py-autogen
-    image: docker.io/stevelsplunk/splk-python-autogen
+    image: docker.io/stevelerner/python-autogen
     ports:
     - containerPort: 6379
     env:
@@ -13,16 +14,16 @@ spec:
       value: America/New_York
     - name: REDISHOST
       value: redis
-    - name: SPLUNK_OTEL_AGENT
+    - name: OTEL_IP
       valueFrom:
         fieldRef:
           fieldPath: status.hostIP
-    - name: OTEL_RESOURCE_ATTRIBUTES
-      value: deployment.environment=otel-demo
     - name: OTEL_SERVICE_NAME
       value: python-autogen-otel
-    - name: OTEL_EXPORTER_OTLP_ENDPOINT
-      value: http://$(SPLUNK_OTEL_AGENT):4317
+    - name: OTEL_TRACES_EXPORTER
+      value: otlp
+    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      value: http://$(OTEL_IP):4317
     command: ["/bin/sh"]
     args: ["run-autogen-ext.sh"]
 ---
@@ -32,6 +33,7 @@ metadata:
   name: redis
   labels:
     app: redis
+  namespace: otel
 spec:
   selector:
     app: redis
@@ -55,7 +57,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: docker.io/stevelsplunk/redis
+        image: docker.io/stevelerner/redis
         ports:
         - containerPort: 6379
         command: ["redis-server", "/usr/local/etc/redis/redis.conf"]

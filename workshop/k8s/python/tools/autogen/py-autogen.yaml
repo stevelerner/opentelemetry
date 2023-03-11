@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: py-autogen
+  namespace: otel
 spec:
   containers:
   - name: py-autogen
@@ -30,6 +31,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: py-autogen
+  namespace: otel
   labels:
     app: py-autogen
 spec:
