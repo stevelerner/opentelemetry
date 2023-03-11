@@ -27,8 +27,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
-        - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: http://$(OTEL_IP):4317
+    - name: OTEL_TRACES_EXPORTER
+      value: otlp
+    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      value: http://$(OTEL_IP):4317
         command: ["/bin/sh"]
         args: ["run-server.sh"]
 ---
@@ -51,6 +53,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: client-py-otel-k8s
+  namespace: otel
 spec:
   containers:
   - name: client-py-otel-k8s
@@ -62,7 +65,9 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.hostIP
-    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+    - name: OTEL_TRACES_EXPORTER
+      value: otlp
+    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
       value: http://$(OTEL_IP):4317
     command: ["/bin/sh"]
     args: ["run-client.sh"]

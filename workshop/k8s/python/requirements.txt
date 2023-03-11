@@ -1,4 +1,6 @@
 opentelemetry-api
+opentelemetry-instrumentation-redis
+redis
 flask
 requests
 prometheus_client
