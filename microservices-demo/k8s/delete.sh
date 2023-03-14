@@ -1,0 +1,12 @@
+kubectl delete -n otel deployment flask-server &
+kubectl delete -n otel service flask-server &
+kubectl delete -n otel pod client-py-gets &
+kubectl delete -n otel pod client-py-posts &
+kubectl delete -n otel pod client-java-gets &
+kubectl delete -n otel pod redis &
+kubectl delete -n otel deployment prometheus-endpoint &
+kubectl delete -n otel deployment redis &
+kubectl delete -n otel service redis &
+kubectl delete -n otel deployment client-java-gets &
+kubectl delete -n otel deployment client-py-gets &
+kubectl delete -n otel deployment client-py-posts &
