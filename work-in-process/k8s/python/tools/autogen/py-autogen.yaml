@@ -1,37 +1,47 @@
-apiVersion: v1
-kind: Pod
+---
+# Python Autogen To Same Container Redis Instance
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: py-autogen
-  namespace: otel
+  namespace: default
 spec:
-  containers:
-  - name: py-autogen
-    image: docker.io/stevelerner/python-autogen
-    ports:
-    - containerPort: 6379
-    env:
-    - name: TZ
-      value: America/New_York
-    - name: REDISHOST
-      value: 127.0.0.1
-    - name: OTEL_IP
-      valueFrom:
-        fieldRef:
-          fieldPath: status.hostIP
-    - name: OTEL_SERVICE_NAME
-      value: python-autogen-otel
-    - name: OTEL_TRACES_EXPORTER
-      value: otlp
-    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
-      value: http://$(OTEL_IP):4317
-    command: ["/bin/sh"]
-    args: ["run-autogen.sh"]
+  selector:
+    matchLabels:
+      name: py-autogen
+  template:
+    metadata:
+      labels:
+        name: py-autogen
+    spec:
+      containers:
+      - name: py-autogen
+        image: docker.io/stevelerner/python-autogen
+        ports:
+        - containerPort: 6379
+        env:
+        - name: TZ
+          value: America/New_York
+        - name: REDISHOST
+          value: redis
+        - name: OTEL_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_SERVICE_NAME
+          value: python-autogen-otel
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://$(OTEL_IP):4317
+        command: ["/bin/sh"]
+        args: ["run-autogen.sh"]
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: py-autogen
-  namespace: otel
+  namespace: default
   labels:
     app: py-autogen
 spec:
