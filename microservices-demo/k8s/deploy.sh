@@ -1,1 +1,1 @@
-kubectl apply -f deployment.yaml
+envsubst < deployment.yaml  | kubectl apply -f -

@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-server
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
@@ -39,7 +39,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: flask-server
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     name: flask-server
@@ -53,7 +53,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-py-posts
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
@@ -85,7 +85,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-py-gets
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
@@ -117,7 +117,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     name: redis
@@ -131,7 +131,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
@@ -154,7 +154,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-java-gets
-  namespace: default
+  namespace: $NAMESPACE
 spec:
   selector:
     matchLabels:
