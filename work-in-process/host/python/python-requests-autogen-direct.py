@@ -4,7 +4,7 @@ from random import random
 from random import seed
 
 seed(1)
-url = os.environ.get('SPLUNK_TEST_URL')
+url = os.environ.get('TEST_URL')
 
 def pythonrequests():
     try:
