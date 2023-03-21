@@ -1,3 +1,9 @@
+Prep Python for Opentelemetry exercises
+```bash
+pip install -r  https://raw.githubusercontent.com/signalfx/otelworkshop/master/setup-tools/requirements.txt
+pip install -Iv protobuf==4.21.12
+```
+
 Set up workshop on an existing clean Ubuntu system or on your Multipass VM: 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/signalfx/otelworkshop/master/setup-tools/ubuntu.sh)

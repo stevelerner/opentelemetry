@@ -4,4 +4,4 @@ opentelemetry-exporter-otlp
 flask
 requests
 redis
-# -Iv protobuf==4.21.12
+# pip install -Iv protobuf==4.21.12
