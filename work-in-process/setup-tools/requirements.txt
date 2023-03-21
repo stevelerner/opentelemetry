@@ -1,4 +1,7 @@
-splunk-opentelemetry[all]
+opentelemetry-distro
+opentelemetry-instrumentation
+opentelemetry-exporter-otlp
 flask
 requests
 redis
+# -Iv protobuf==4.21.12
