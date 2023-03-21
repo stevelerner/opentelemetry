@@ -1,6 +1,6 @@
 Prep Python for Opentelemetry exercises
 ```bash
-pip install -r  https://raw.githubusercontent.com/signalfx/otelworkshop/master/setup-tools/requirements.txt
+pip install -r  https://raw.githubusercontent.com/stevelerner/opentelemetry/main/work-in-process/setup-tools/requirements.txt
 pip install -Iv protobuf==4.21.12
 ```
 

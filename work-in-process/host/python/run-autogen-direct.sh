@@ -1,1 +1,1 @@
-opentelemetry-instrument python3 python-requests-autogen-direct.py
+opentelemetry-instrument python python-requests-autogen-direct.py
