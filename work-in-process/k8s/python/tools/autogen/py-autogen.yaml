@@ -28,7 +28,7 @@ spec:
             fieldRef:
               fieldPath: status.hostIP
         - name: OTEL_SERVICE_NAME
-          value: python-autogen-otel
+          value: py-autogen
         - name: OTEL_TRACES_EXPORTER
           value: otlp
         - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
