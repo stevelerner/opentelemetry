@@ -1,0 +1,51 @@
+{
+    "containerDefinitions": [
+        {
+	    "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "ecs",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "py-autogen"
+                }
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                "name": "OTEL_EXPORTER_OTLP_TRACES_HEADERS",
+                "value": "Authorization=Bearer%206be574fd-4ef0-452a-89ac-8faa2d24d48d"
+                },
+                {
+                "name": "OTEL_RESOURCE_ATTRIBUTES",
+                "value": "service.name=pythonsvc,application.name=pythonapp,api.name=pythoncxapi,cx.application.name=pythoncxapp,cx.subsystem.name=pythoncxsub"
+                },
+                {
+                "name": "OTEL_SERVICE_NAME",
+                "value": "py-autogen"
+                },
+                {
+                "name": "OTEL_EXPORTER_OTLP_ENDPOINT",
+                "value": "otel-traces.coralogix.com:443"
+                },
+                {
+                "name": "OTEL_TRACES_EXPORTER",
+                "value": "otlp_proto_grpc"                  
+                }
+            ],
+            "image": "docker.io/stevelerner/python-autogen",
+            "essential": true,
+            "dockerLabels": {
+                "app": "py-autogen"
+            },
+            "name": "py-autogen"
+        }
+    ],
+    "executionRoleArn": "arn:aws:iam::887896411387:role/ECS-task-full-access",
+    "cpu": "256",
+    "memory": "512",
+    "family": "py-auogen",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ]
+}

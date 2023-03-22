@@ -1,0 +1,33 @@
+---
+# Python Autogen To Same Container Redis Instance
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-autogensimple
+spec:
+  selector:
+    matchLabels:
+      name: py-autogensimple
+  template:
+    metadata:
+      labels:
+        name: py-autogensimple
+    spec:
+      containers:
+      - name: py-autogensimple
+        image: docker.io/stevelerner/python-autogensimple
+        env:
+        - name: TZ
+          value: America/New_York
+        - name: OTEL_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: OTEL_SERVICE_NAME
+          value: py-autogensimple
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://$(OTEL_IP):4317
+        command: ["/bin/sh"]
+        args: ["run-autogensimple.sh"]
