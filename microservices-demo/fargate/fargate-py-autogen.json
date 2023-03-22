@@ -13,11 +13,11 @@
             "environment": [
                 {
                 "name": "OTEL_EXPORTER_OTLP_TRACES_HEADERS",
-                "value": "<Your Key Here>"
+                "value": "<Your Keys and Other Headers Here>"
                 },
                 {
                 "name": "OTEL_RESOURCE_ATTRIBUTES",
-                "value": "<your additional vars here i.e.service.name=pythonsvc,application.name=pythonapp,api.name=pythoncxapi,cx.application.name=pythoncxapp,cx.subsystem.name=pythoncxsub>"
+                "value": "<your additional vars here>"
                 },
                 {
                 "name": "OTEL_SERVICE_NAME",
@@ -25,7 +25,7 @@
                 },
                 {
                 "name": "OTEL_EXPORTER_OTLP_ENDPOINT",
-                "value": "<your traces endpoint here i.e. otel-traces.coralogix.com:443>"
+                "value": "<your traces endpoint here>"
                 },
                 {
                 "name": "OTEL_TRACES_EXPORTER",
