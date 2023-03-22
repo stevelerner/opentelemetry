@@ -9,7 +9,7 @@ RUN apt-get update && \
     export PATH="$HOME/.local/bin:$PATH" && \
     apt install -y python3-pip && \
     python3 -m pip install -r requirements.txt && \
-    # python3 -m pip install -Iv protobuf==4.21.12 && \
+    python3 -m pip install -Iv protobuf==4.21.12 && \
     opentelemetry-bootstrap -a install && \
     apt -y autoremove && apt-get -y autoclean
 EXPOSE 6379

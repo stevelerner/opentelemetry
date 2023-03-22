@@ -1,8 +1,7 @@
-import redis # make sure python redis package is installed
-from opentelemetry import trace # make sure python opentelemetry package is installed
-from opentelemetry.trace import SpanKind
-import datetime
-import json
+# from opentelemetry import trace # make sure python opentelemetry package is installed
+# from opentelemetry.trace import SpanKind
+# import datetime json
+import redis
 import os
 from time import sleep
 from random import random, seed, randint
@@ -27,19 +26,19 @@ while True:
 
     hello_redis()   # redis is picked up by auto-instrumentation   
 
-    random_number = randint(0,16777215)
-    hex_number = str(hex(random_number))
-    hex_number = hex_number[2:]
-    printtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]+"Z"
-    log_dict = {'transactionTime': printtime,
-                'transactionID': hex_number
-                }
+    # random_number = randint(0,16777215)
+    # # hex_number = str(hex(random_number))
+    # hex_number = hex_number[2:]
+    # printtime = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]+"Z"
+    # log_dict = {'transactionTime': printtime,
+    #             'transactionID': hex_number
+    #             }
     
-    tracer = trace.get_tracer(__name__)     # create a manual span for a logging operation called "log"
-    with tracer.start_as_current_span("log", kind=SpanKind.SERVER) as span:
-        span.set_attribute("transactionTime", printtime)
-        span.set_attribute("transactionID", hex_number)
-        print(json.dumps(log_dict))
+    # tracer = trace.get_tracer(__name__)     # create a manual span for a logging operation called "log"
+    # with tracer.start_as_current_span("log", kind=SpanKind.SERVER) as span:
+    #     span.set_attribute("transactionTime", printtime)
+    #     span.set_attribute("transactionID", hex_number)
+    #     print(json.dumps(log_dict))
     
     y=round(random(),1)+.25
     sleep(y)
