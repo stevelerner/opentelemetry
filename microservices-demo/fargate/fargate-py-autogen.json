@@ -4,46 +4,53 @@
 	    "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "ecs",
-                    "awslogs-region": "us-east-1",
-                    "awslogs-stream-prefix": "py-autogen"
+                    "awslogs-group": "<your log group here i.e.: ecs>",
+                    "awslogs-region": "<your region here i.e.: us-east-1>",
+                    "awslogs-stream-prefix": "py-autogensimple"
                 }
             },
             "cpu": 0,
             "environment": [
                 {
                 "name": "OTEL_EXPORTER_OTLP_TRACES_HEADERS",
-                "value": "Authorization=Bearer%206be574fd-4ef0-452a-89ac-8faa2d24d48d"
+                "value": "<Your Key Here>"
                 },
                 {
                 "name": "OTEL_RESOURCE_ATTRIBUTES",
-                "value": "service.name=pythonsvc,application.name=pythonapp,api.name=pythoncxapi,cx.application.name=pythoncxapp,cx.subsystem.name=pythoncxsub"
+                "value": "<your additional vars here i.e.service.name=pythonsvc,application.name=pythonapp,api.name=pythoncxapi,cx.application.name=pythoncxapp,cx.subsystem.name=pythoncxsub>"
                 },
                 {
                 "name": "OTEL_SERVICE_NAME",
-                "value": "py-autogen"
+                "value": "py-autogensimple"
                 },
                 {
                 "name": "OTEL_EXPORTER_OTLP_ENDPOINT",
-                "value": "otel-traces.coralogix.com:443"
+                "value": "<your traces endpoint here i.e. otel-traces.coralogix.com:443>"
                 },
                 {
                 "name": "OTEL_TRACES_EXPORTER",
                 "value": "otlp_proto_grpc"                  
                 }
             ],
-            "image": "docker.io/stevelerner/python-autogen",
+            "image": "docker.io/stevelerner/python-autogensimple",
             "essential": true,
             "dockerLabels": {
-                "app": "py-autogen"
+                "app": "py-autogensimple"
             },
-            "name": "py-autogen"
+            "name": "py-autogensimple",
+            "entryPoint": [
+                "sh",
+		        "-c"
+            ], 
+            "command": [
+                "/bin/sh run-autogensimple.sh"
+            ]
         }
     ],
-    "executionRoleArn": "arn:aws:iam::887896411387:role/ECS-task-full-access",
+    "executionRoleArn": "<Your Key Here i.e.: arn:aws:iam::887896411387:role/ECS-task-full-access>",
     "cpu": "256",
     "memory": "512",
-    "family": "py-auogen",
+    "family": "py-autogensimple",
     "networkMode": "awsvpc",
     "requiresCompatibilities": [
         "FARGATE"
